@@ -3,54 +3,46 @@ package com.weg.gestaoescolar.GestaoEscolar.model;
 public class Nota {
 
     private int id;
-    private int aluno_id;
-    private int aula_id;
+    private int alunoId;
+    private int aulaId;
     private double valor;
 
-    public Nota() { }
+    private String alunoNome;
+    private String aulaAssunto;
 
-    public Nota(int id, int aluno_id, int aula_id, double valor) {
+    public Nota() {
+    }
+
+    public Nota(int id, int alunoId, int aulaId, double valor, String alunoNome, String aulaAssunto) {
         this.id = id;
-        this.aluno_id = aluno_id;
-        this.aula_id = aula_id;
+        this.alunoId = alunoId;
+        this.aulaId = aulaId;
+        this.valor = valor;
+        this.alunoNome = alunoNome;
+        this.aulaAssunto = aulaAssunto;
+    }
+
+    public Nota(int alunoId, int aulaId, double valor) {
+        this.alunoId = alunoId;
+        this.aulaId = aulaId;
         this.valor = valor;
     }
 
-    public Nota(int aluno_id, int aula_id, double valor) {
-        this.aluno_id = aluno_id;
-        this.aula_id = aula_id;
-        this.valor = valor;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getId() {
-        return id;
-    }
+    public int getAlunoId() { return alunoId; }
+    public void setAlunoId(int alunoId) { this.alunoId = alunoId; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getAulaId() { return aulaId; }
+    public void setAulaId(int aulaId) { this.aulaId = aulaId; }
 
-    public int getAluno_id() {
-        return aluno_id;
-    }
+    public double getValor() { return valor; }
+    public void setValor(double valor) { this.valor = valor; }
 
-    public void setAluno_id(int aluno_id) {
-        this.aluno_id = aluno_id;
-    }
+    public String getAlunoNome() { return alunoNome; }
+    public void setAlunoNome(String alunoNome) { this.alunoNome = alunoNome; }
 
-    public int getAula_id() {
-        return aula_id;
-    }
-
-    public void setAula_id(int aula_id) {
-        this.aula_id = aula_id;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
+    public String getAulaAssunto() { return aulaAssunto; }
+    public void setAulaAssunto(String aulaAssunto) { this.aulaAssunto = aulaAssunto; }
 }
