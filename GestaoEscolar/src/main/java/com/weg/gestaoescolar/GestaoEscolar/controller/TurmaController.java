@@ -62,4 +62,14 @@ public TurmaController(TurmaService turmaService) {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @GetMapping("/cursos/{id}/turmas")
+    public List<TurmaRespostaDto> listarTurmasPorCurso(@PathVariable int id) {
+
+        try {
+            return turmaService.listarTurmasPorCurso(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

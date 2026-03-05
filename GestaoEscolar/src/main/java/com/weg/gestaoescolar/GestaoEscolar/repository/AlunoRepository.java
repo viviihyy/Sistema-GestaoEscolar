@@ -135,4 +135,41 @@ public class AlunoRepository {
         }
     }
 
+    public List<Aluno> listarAlunosPorTurma(int turmaId) throws SQLException {
+
+        List<Aluno> alunos = new ArrayList<>();
+
+        String query = """
+        SELECT
+            a.id,
+            a.nome,
+            a.email,
+            a.matricula,
+            a.data_nascimento
+        FROM aluno a
+        JOIN turma_aluno ta ON a.id = ta.aluno_id
+        WHERE ta.turma_id = ?
+        """;
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, turmaId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                alunos.add(new Aluno(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("matricula"),
+                        rs.getDate("data_nascimento").toLocalDate()
+                ));
+            }
+        }
+
+        return alunos;
+    }
+
 }

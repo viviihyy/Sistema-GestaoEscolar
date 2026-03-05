@@ -2,7 +2,9 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 
 import com.weg.gestaoescolar.GestaoEscolar.dto.cursoDto.CursoRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.cursoDto.CursoRespostaDto;
+import com.weg.gestaoescolar.GestaoEscolar.dto.turmaDto.TurmaRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.CursoService;
+import com.weg.gestaoescolar.GestaoEscolar.service.TurmaService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -13,9 +15,11 @@ import java.util.List;
 public class CursoController {
 
     private final CursoService cursoService;
+    private final TurmaService turmaService;
 
-    public CursoController(CursoService cursoService) {
+    public CursoController(CursoService cursoService, TurmaService turmaService) {
         this.cursoService = cursoService;
+        this.turmaService = turmaService;
     }
 
     @PostMapping("/cursos")
@@ -59,6 +63,16 @@ public class CursoController {
 
         try {
             return cursoService.deletaCurso(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cursos/{id}/turmas")
+    public List<TurmaRespostaDto> listarTurmasPorCurso(@PathVariable int id) {
+
+        try {
+            return turmaService.listarTurmasPorCurso(id);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

@@ -3,7 +3,6 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 import com.weg.gestaoescolar.GestaoEscolar.dto.alunoDto.AlunoRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.alunoDto.AlunoRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.AlunoService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -60,6 +59,15 @@ public class AlunoController {
     public boolean deletaAluno(@PathVariable int id) {
         try {
             return alunoService.deletaAluno(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/turmas/{id}/alunos")
+    public List<AlunoRespostaDto> listarAlunosPorTurma(@PathVariable int id) {
+        try {
+            return alunoService.listarAlunosPorTurma(id);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

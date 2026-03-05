@@ -12,6 +12,7 @@ import java.util.List;
 public class TurmaRepository {
 
     public Turma cadastroTurma(Turma turma, List<Integer> listaAlunosIds) throws SQLException {
+
         String query = """
             INSERT INTO turma
             (nome,curso_id,professor_id)
@@ -34,11 +35,11 @@ public class TurmaRepository {
             }
 
             String queryAluno = """
-                    INSERT INTO turma_aluno
-                    (turma_id, aluno_id)
-                    VALUES
-                    (?,?)
-                    """;
+                INSERT INTO turma_aluno
+                (turma_id, aluno_id)
+                VALUES
+                (?,?)
+                """;
 
             try (PreparedStatement stmtAluno = conn.prepareStatement(queryAluno)) {
                 for (Integer alunoId : listaAlunosIds) {
@@ -48,26 +49,33 @@ public class TurmaRepository {
                 }
             }
         }
+
         return turma;
     }
 
     public List<Turma> listaTurma() throws SQLException {
+
         List<Turma> turmas = new ArrayList<>();
 
         String query = """
-            SELECT   id
-                    ,nome
-                    ,curso_id
-                    ,professor_id
-            FROM turma
-            """;
+        SELECT
+            t.id,
+            t.nome,
+            t.curso_id,
+            t.professor_id,
+            c.nome AS nome_curso,
+            p.nome AS nome_professor
+        FROM turma t
+        JOIN curso c ON t.curso_id = c.id
+        JOIN professor p ON t.professor_id = p.id
+        """;
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 turmas.add(new Turma(
                         rs.getInt("id"),
                         rs.getString("nome"),
@@ -76,23 +84,31 @@ public class TurmaRepository {
                 ));
             }
         }
+
         return turmas;
     }
 
     public Turma buscaPorId(int id) throws SQLException {
+
         String query = """
-            SELECT   id
-                    ,nome
-                    ,curso_id
-                    ,professor_id
-            FROM turma
-            WHERE id = ?
-            """;
+        SELECT
+            t.id,
+            t.nome,
+            t.curso_id,
+            t.professor_id,
+            c.nome AS nome_curso,
+            p.nome AS nome_professor
+        FROM turma t
+        JOIN curso c ON t.curso_id = c.id
+        JOIN professor p ON t.professor_id = p.id
+        WHERE t.id = ?
+        """;
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
+
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -104,15 +120,17 @@ public class TurmaRepository {
                 );
             }
         }
+
         return null;
     }
 
     public void atualizaTurma(Turma turma) throws SQLException {
+
         String query = """
-            UPDATE turma
-            SET nome = ?
-            WHERE id = ?
-            """;
+        UPDATE turma
+        SET nome = ?
+        WHERE id = ?
+        """;
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -124,17 +142,54 @@ public class TurmaRepository {
     }
 
     public boolean deletaTurma(int id) throws SQLException {
+
         String query = """
-            DELETE FROM turma
-            WHERE id = ?
-            """;
+        DELETE FROM turma
+        WHERE id = ?
+        """;
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
+
             int linhasAfetadas = stmt.executeUpdate();
+
             return linhasAfetadas > 0;
         }
+    }
+
+    public List<Turma> listarTurmasPorCurso(int cursoId) throws SQLException {
+
+        List<Turma> turmas = new ArrayList<>();
+
+        String query = """
+        SELECT
+            id,
+            nome,
+            curso_id,
+            professor_id
+        FROM turma
+        WHERE curso_id = ?
+        """;
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, cursoId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                turmas.add(new Turma(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getInt("curso_id"),
+                        rs.getInt("professor_id")
+                ));
+            }
+        }
+
+        return turmas;
     }
 }

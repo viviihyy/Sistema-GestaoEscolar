@@ -151,4 +151,45 @@ public class NotaRepository {
             return linhas > 0;
         }
     }
+
+    public List<Nota> listarNotasPorAluno(int alunoId) throws SQLException {
+
+        List<Nota> notas = new ArrayList<>();
+
+        String query = """
+        SELECT
+            n.id,
+            n.aluno_id,
+            n.aula_id,
+            n.valor,
+            a.nome AS aluno_nome,
+            au.assunto AS aula_assunto
+        FROM nota n
+        JOIN aluno a ON n.aluno_id = a.id
+        JOIN aula au ON n.aula_id = au.id
+        WHERE n.aluno_id = ?
+        """;
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, alunoId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                notas.add(new Nota(
+                        rs.getInt("id"),
+                        rs.getInt("aluno_id"),
+                        rs.getInt("aula_id"),
+                        rs.getDouble("valor"),
+                        rs.getString("aluno_nome"),
+                        rs.getString("aula_assunto")
+                ));
+            }
+        }
+
+        return notas;
+    }
 }

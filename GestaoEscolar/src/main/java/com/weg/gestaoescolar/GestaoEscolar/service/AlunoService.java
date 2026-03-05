@@ -6,11 +6,8 @@ import com.weg.gestaoescolar.GestaoEscolar.mapper.AlunoMapper;
 import com.weg.gestaoescolar.GestaoEscolar.model.Aluno;
 import com.weg.gestaoescolar.GestaoEscolar.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,5 +50,10 @@ public class AlunoService {
 
     public boolean deletaAluno(int id) throws SQLException {
         return alunoRepository.deletaAluno(id);
+    }
+
+    public List<AlunoRespostaDto> listarAlunosPorTurma(int turmaId) throws SQLException {
+        List<Aluno> alunos = alunoRepository.listarAlunosPorTurma(turmaId);
+        return alunoMapper.paraListaResposta(alunos);
     }
 }

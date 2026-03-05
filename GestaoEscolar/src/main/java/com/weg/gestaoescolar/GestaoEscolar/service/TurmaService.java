@@ -53,4 +53,10 @@ public class TurmaService {
     public boolean deletaTurma(int id) throws SQLException {
         return turmaRepository.deletaTurma(id);
     }
+
+    public List<TurmaRespostaDto> listarTurmasPorCurso(int cursoId) throws SQLException {
+        return turmaMapper.paraListaResposta(
+                turmaRepository.listarTurmasPorCurso(cursoId)
+        );
+    }
 }
