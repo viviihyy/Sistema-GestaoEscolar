@@ -25,7 +25,7 @@ public class TurmaService {
     public TurmaRespostaDto cadastroTurma(TurmaRequisicaoDto turmaRequisicaoDto) throws SQLException {
         Turma turma = turmaMapper.paraEntidade(turmaRequisicaoDto);
         Turma cadastro = turmaRepository.cadastroTurma(turma, turmaRequisicaoDto.listaAlunosIds());
-        return turmaMapper.paraResposta(cadastro, new ArrayList<>());
+        return turmaMapper.paraResposta(cadastro, "", "", new ArrayList<>());
     }
 
     public List<TurmaRespostaDto> listaTurma() throws SQLException {
@@ -40,14 +40,14 @@ public class TurmaService {
             throw new RuntimeException("Turma não encontrada");
         }
 
-        return turmaMapper.paraResposta(turma, new ArrayList<>());
+        return turmaMapper.paraResposta(turma, "", "", new ArrayList<>());
     }
 
     public TurmaRespostaDto atualizaTurma(TurmaRequisicaoDto turmaRequisicaoDto, int id) throws SQLException {
         Turma turma = turmaMapper.paraEntidade(turmaRequisicaoDto);
         turma.setId(id);
         turmaRepository.atualizaTurma(turma);
-        return turmaMapper.paraResposta(turma, new ArrayList<>());
+        return turmaMapper.paraResposta(turma, "", "", new ArrayList<>());
     }
 
     public boolean deletaTurma(int id) throws SQLException {

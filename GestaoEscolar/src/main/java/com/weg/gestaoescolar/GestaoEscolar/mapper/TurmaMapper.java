@@ -19,12 +19,12 @@ public class TurmaMapper {
         );
     }
 
-    public TurmaRespostaDto paraResposta(Turma turma, List<String> listaAlunos) {
+    public TurmaRespostaDto paraResposta(Turma turma, String nomeCurso, String nomeProfessor, List<String> listaAlunos) {
         return new TurmaRespostaDto(
                 turma.getId(),
                 turma.getNome(),
-                turma.getCurso_id(),
-                turma.getProfessor_id(),
+                nomeCurso,
+                nomeProfessor,
                 listaAlunos
         );
     }
@@ -33,7 +33,7 @@ public class TurmaMapper {
         List<TurmaRespostaDto> lista = new ArrayList<>();
 
         for (Turma turma : turmas) {
-            lista.add(paraResposta(turma, new ArrayList<>()));
+            lista.add(paraResposta(turma, "", "", new ArrayList<>()));
         }
         return lista;
     }
