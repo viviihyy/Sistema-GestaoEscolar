@@ -18,11 +18,12 @@ public class CursoMapper {
         );
     }
 
-    public CursoRespostaDto paraResposta(Curso curso) {
+    public CursoRespostaDto paraResposta(Curso curso, List<String> professores) {
         return new CursoRespostaDto(
                 curso.getId(),
                 curso.getNome(),
-                curso.getCodigo()
+                curso.getCodigo(),
+                professores
         );
     }
 
@@ -30,7 +31,7 @@ public class CursoMapper {
         List<CursoRespostaDto> lista = new ArrayList<>();
 
         for (Curso curso : cursos) {
-            lista.add(paraResposta(curso));
+            lista.add(paraResposta(curso, new ArrayList<>()));
         }
         return lista;
     }

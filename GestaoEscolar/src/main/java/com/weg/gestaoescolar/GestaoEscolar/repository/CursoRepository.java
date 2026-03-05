@@ -1,6 +1,5 @@
 package com.weg.gestaoescolar.GestaoEscolar.repository;
 
-import com.weg.gestaoescolar.GestaoEscolar.controller.CursoController;
 import com.weg.gestaoescolar.GestaoEscolar.dao.Conexao;
 import com.weg.gestaoescolar.GestaoEscolar.model.Curso;
 import org.springframework.stereotype.Repository;

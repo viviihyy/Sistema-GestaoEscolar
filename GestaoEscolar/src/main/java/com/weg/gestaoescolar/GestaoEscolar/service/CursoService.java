@@ -8,6 +8,7 @@ import com.weg.gestaoescolar.GestaoEscolar.repository.CursoRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +25,7 @@ public class CursoService {
     public CursoRespostaDto cadastroCurso(CursoRequisicaoDto cursoRequisicaoDto) throws SQLException {
         Curso curso = cursoMapper.paraEntidade(cursoRequisicaoDto);
         Curso cadastro = cursoRepository.cadastroCurso(curso);
-        return cursoMapper.paraResposta(cadastro);
+        return cursoMapper.paraResposta(cadastro, new ArrayList<>());
     }
 
     public List<CursoRespostaDto> listaCurso() throws SQLException {
@@ -34,14 +35,19 @@ public class CursoService {
 
     public CursoRespostaDto buscaPorId(int id) throws SQLException {
         Curso curso = cursoRepository.buscaPorId(id);
-        return cursoMapper.paraResposta(curso);
+
+        if (curso == null) {
+            throw new RuntimeException("Curso nao encontrado");
+        }
+
+        return cursoMapper.paraResposta(curso, new ArrayList<>());
     }
 
     public CursoRespostaDto atualizaCurso(CursoRequisicaoDto cursoRequisicaoDto, int id) throws SQLException {
         Curso curso = cursoMapper.paraEntidade(cursoRequisicaoDto);
         curso.setId(id);
         cursoRepository.atualizaCurso(curso);
-        return cursoMapper.paraResposta(curso);
+        return cursoMapper.paraResposta(curso, new ArrayList<>());
     }
 
     public boolean deletaCurso(int id) throws SQLException {
