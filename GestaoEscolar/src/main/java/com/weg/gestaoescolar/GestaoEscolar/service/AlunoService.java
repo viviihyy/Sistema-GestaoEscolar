@@ -37,10 +37,14 @@ public class AlunoService {
 
     public AlunoRespostaDto buscaPorId(int id) throws SQLException {
         Aluno aluno = alunoRepository.buscaPorId(id);
+
+        if (aluno == null) {
+            throw new RuntimeException("Aluno não encontrado");
+        }
         return alunoMapper.paraResposta(aluno);
     }
 
-    public AlunoRespostaDto atualizaAluno(@PathVariable int id, @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) throws SQLException {
+    public AlunoRespostaDto atualizaAluno(int id, AlunoRequisicaoDto alunoRequisicaoDto) throws SQLException {
         Aluno aluno = alunoMapper.paraEntidade(alunoRequisicaoDto);
         aluno.setId(id);
         alunoRepository.atualizaAluno(aluno);
