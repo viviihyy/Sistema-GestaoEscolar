@@ -1,9 +1,12 @@
 package com.weg.gestaoescolar.GestaoEscolar.dto.turmaDto;
 
+import java.util.List;
+
 public record TurmaRespostaDto(
         int id,
         String nome,
-        int curso_id,
-        int professor_id
+        String nomeCurso,
+        String nomeProfessor,
+        List<String> listaAlunos
 ) {
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class TurmaRepository {
 
-    public Turma cadastroTurma(Turma turma) throws SQLException {
+    public Turma cadastroTurma(Turma turma, List<Integer> listaAlunosIds) throws SQLException {
         String query = """
             INSERT INTO turma
             (nome,curso_id,professor_id)
@@ -31,6 +31,21 @@ public class TurmaRepository {
 
             if (rs.next()) {
                 turma.setId(rs.getInt(1));
+            }
+
+            String queryAluno = """
+                    INSERT INTO turma_aluno
+                    (turma_id, aluno_id)
+                    VALUES
+                    (?,?)
+                    """;
+
+            try (PreparedStatement stmtAluno = conn.prepareStatement(queryAluno)) {
+                for (Integer alunoId : listaAlunosIds) {
+                    stmtAluno.setInt(1, turma.getId());
+                    stmtAluno.setInt(2, alunoId);
+                    stmtAluno.executeUpdate();
+                }
             }
         }
         return turma;
@@ -103,6 +118,7 @@ public class TurmaRepository {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, turma.getNome());
+            stmt.setInt(2, turma.getId());
             stmt.executeUpdate();
         }
     }
