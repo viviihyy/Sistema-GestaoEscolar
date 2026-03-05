@@ -36,6 +36,11 @@ public class ProfessorService {
 
     public ProfessorRespostaDto buscaPorId(int id) throws SQLException {
         Professor professor = professorRepository.buscaPorId(id);
+
+        if (professor == null) {
+            throw new RuntimeException("Professor não encontrado");
+        }
+
         return professorMapper.paraResposta(professor);
     }
 

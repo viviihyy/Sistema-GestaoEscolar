@@ -2,7 +2,6 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 
 import com.weg.gestaoescolar.GestaoEscolar.dto.professorDto.ProfessorRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.professorDto.ProfessorRespostaDto;
-import com.weg.gestaoescolar.GestaoEscolar.repository.ProfessorRepository;
 import com.weg.gestaoescolar.GestaoEscolar.service.ProfessorService;
 import org.springframework.web.bind.annotation.*;
 
