@@ -3,6 +3,7 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 import com.weg.gestaoescolar.GestaoEscolar.dto.notaDto.NotaRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.notaDto.NotaRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.NotaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class NotaController {
     }
 
     @PostMapping("/notas")
-    public NotaRespostaDto cadastrarNota(@RequestBody NotaRequisicaoDto dto) {
+    public NotaRespostaDto cadastrarNota(@Valid @RequestBody NotaRequisicaoDto dto) {
 
         try {
             return notaService.cadastrarNota(dto);
@@ -50,7 +51,7 @@ public class NotaController {
 
     @PutMapping("/notas/{id}")
     public NotaRespostaDto atualizarNota(@PathVariable int id,
-                                         @RequestBody NotaRequisicaoDto dto) {
+                                         @Valid @RequestBody NotaRequisicaoDto dto) {
 
         try {
             return notaService.atualizarNota(id, dto);

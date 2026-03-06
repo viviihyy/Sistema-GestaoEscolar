@@ -3,6 +3,7 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 import com.weg.gestaoescolar.GestaoEscolar.dto.turmaDto.TurmaRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.turmaDto.TurmaRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.TurmaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public TurmaController(TurmaService turmaService) {
 }
 
 @PostMapping("/turmas")
-    public TurmaRespostaDto cadastroTurma(@RequestBody TurmaRequisicaoDto turmaRequisicaoDto) {
+    public TurmaRespostaDto cadastroTurma(@Valid @RequestBody TurmaRequisicaoDto turmaRequisicaoDto) {
         try {
             return turmaService.cadastroTurma(turmaRequisicaoDto);
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public TurmaController(TurmaService turmaService) {
     }
 
     @PutMapping("/turmas/{id}")
-    public TurmaRespostaDto atualizaTurma(@RequestBody TurmaRequisicaoDto turmaRequisicaoDto, @PathVariable int id) {
+    public TurmaRespostaDto atualizaTurma(@Valid @RequestBody TurmaRequisicaoDto turmaRequisicaoDto, @PathVariable int id) {
         try {
             return turmaService.atualizaTurma(turmaRequisicaoDto, id);
         } catch (SQLException e) {

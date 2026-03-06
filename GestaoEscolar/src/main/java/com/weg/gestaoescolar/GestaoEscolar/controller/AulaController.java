@@ -3,6 +3,7 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 import com.weg.gestaoescolar.GestaoEscolar.dto.aulaDto.AulaRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.aulaDto.AulaRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.AulaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class AulaController {
     }
 
     @PostMapping("/aulas")
-    public AulaRespostaDto cadsatroAula (@RequestBody AulaRequisicaoDto aulaRequisicaoDto) {
+    public AulaRespostaDto cadsatroAula (@Valid @RequestBody AulaRequisicaoDto aulaRequisicaoDto) {
 
         try {
             return aulaService.cadastroAula(aulaRequisicaoDto);
@@ -47,7 +48,7 @@ public class AulaController {
     }
 
     @PutMapping("/aulas/{id}")
-    public AulaRespostaDto atualizaAula(@PathVariable int id, @RequestBody AulaRequisicaoDto aulaRequisicaoDto) {
+    public AulaRespostaDto atualizaAula(@PathVariable int id, @Valid @RequestBody AulaRequisicaoDto aulaRequisicaoDto) {
         try {
             return aulaService.atualizaAula(id, aulaRequisicaoDto);
         } catch (SQLException e) {

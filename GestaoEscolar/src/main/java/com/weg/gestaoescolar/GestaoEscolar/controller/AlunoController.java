@@ -3,6 +3,7 @@ package com.weg.gestaoescolar.GestaoEscolar.controller;
 import com.weg.gestaoescolar.GestaoEscolar.dto.alunoDto.AlunoRequisicaoDto;
 import com.weg.gestaoescolar.GestaoEscolar.dto.alunoDto.AlunoRespostaDto;
 import com.weg.gestaoescolar.GestaoEscolar.service.AlunoService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class AlunoController {
     }
 
     @PostMapping("/alunos")
-    public AlunoRespostaDto cadastroAluno (@RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
+    public AlunoRespostaDto cadastroAluno (@Valid @RequestBody AlunoRequisicaoDto alunoRequisicaoDto) {
 
         try {
             return alunoService.cadastroAluno(alunoRequisicaoDto);
